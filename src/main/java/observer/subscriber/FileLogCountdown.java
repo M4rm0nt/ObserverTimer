@@ -9,12 +9,16 @@ import java.time.format.DateTimeFormatter;
 public class FileLogCountdown implements ITimerListener {
 
     private final ILogger logger;
-    private final ITimer timer;
+    private ITimer timer;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-    public FileLogCountdown(ILogger logger, ITimer timer) {
+    public FileLogCountdown(ILogger logger) {
         this.logger = logger;
-        this.timer = timer;
+    }
+
+    @Override
+    public void setPublisher(ITimer publisher) {
+        this.timer = publisher;
     }
 
     @Override

@@ -23,10 +23,12 @@ public class Main {
         this.timer = new Timer();
 
         ILogger consoleLogger = new ConsoleLogger(new Console());
-        ITimerListener logCountdown = new LogCountdown(consoleLogger, this.timer);
+        ITimerListener logCountdown = new LogCountdown(consoleLogger);
+        logCountdown.setPublisher(this.timer);
 
         try (FileLogger fileLogger = new FileLogger("src/main/resources/log")) {
-            ITimerListener fileLogCountdown = new FileLogCountdown(fileLogger, this.timer);
+            ITimerListener fileLogCountdown = new FileLogCountdown(fileLogger);
+            fileLogCountdown.setPublisher(this.timer);
 
             logCountdown.register();
             fileLogCountdown.register();
