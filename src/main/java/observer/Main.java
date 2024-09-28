@@ -34,7 +34,7 @@ public class Main {
             fileLogCountdown.register();
 
             Timer timer = (Timer) this.timer;
-            System.out.println(timer.getListeners().size() + " Listener registriert.");
+            consoleLogger.debug("%d " + "Listener registriert.", timer.getListeners().size());
 
             this.timer.set(seconds);
             this.timer.start();
@@ -44,7 +44,7 @@ public class Main {
             logCountdown.remove();
             fileLogCountdown.remove();
 
-            System.out.println(timer.getListeners().size() + " Listener registriert.");
+            consoleLogger.debug("%d " + "Listener registriert.", timer.getListeners().size());
 
         } catch (Exception e) {
             System.err.println("Fehler beim Ausführen des Countdowns: " + e.getMessage());

@@ -21,20 +21,32 @@ public class FileLogger implements ILogger, AutoCloseable {
     }
 
     @Override
-    public void info(String message) {
-        writer.println("INFO: " + message);
-        writer.flush();
-    }
-
-    @Override
     public void info(String format, Object... args) {
         String message = String.format(format, args);
         info(message);
     }
 
     @Override
+    public void info(String message) {
+        writer.println("INFO: " + message);
+        writer.flush();
+    }
+
+    @Override
     public void error(String message) {
         writer.println("ERROR: " + message);
+        writer.flush();
+    }
+
+    @Override
+    public void debug(String format, Object... args) {
+        String message = String.format(format, args);
+        debug(message);
+    }
+
+    @Override
+    public void debug(String message) {
+        writer.println("DEBUG: " + message);
         writer.flush();
     }
 }

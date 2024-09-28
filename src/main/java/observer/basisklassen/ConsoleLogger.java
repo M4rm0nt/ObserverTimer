@@ -1,8 +1,5 @@
 package observer.basisklassen;
 
-/**
- * Logger, der Nachrichten auf der Konsole ausgibt.
- */
 public class ConsoleLogger implements ILogger {
 
     private final IConsole console;
@@ -16,7 +13,6 @@ public class ConsoleLogger implements ILogger {
         String message = String.format(format, args);
         info(message);
     }
-
     @Override
     public void info(String message) {
         console.print("INFO: " + message);
@@ -26,4 +22,15 @@ public class ConsoleLogger implements ILogger {
     public void error(String message) {
         console.print("ERROR: " + message);
     }
+
+    @Override
+    public void debug(String format, Object... args) {
+        String message = String.format(format, args);
+        debug(message);
+    }
+    @Override
+    public void debug(String message) {
+        console.print("DEBUG: " + message);
+    }
+
 }
