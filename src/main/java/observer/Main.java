@@ -12,33 +12,35 @@ import observer.subscriber.LogCountdown;
 
 // Steuerungsklasse
 public class Main {
-
     private ITimer timer;
 
     public static void main(String[] args) {
         Main main = new Main();
-        main.setupAndStartCountdown(2);
+        main.setupAndStartCountdown(5); // 5 Sekunden als Beispiel
     }
 
     public void setupAndStartCountdown(int seconds) {
-
         this.timer = new Timer();
 
-        ILogger logger = new ConsoleLogger(new Console());
-        ITimerListener logCountdown = new LogCountdown(logger, this.timer);
+        ILogger consoleLogger = new ConsoleLogger(new Console());
+        ITimerListener logCountdown = new LogCountdown(consoleLogger, this.timer);
 
-        ILogger fileLogger = new FileLogger("src/main/resources/log");
-        ITimerListener fileListener = new FileLogCountdown(fileLogger, this.timer);
+        try (FileLogger fileLogger = new FileLogger("src/main/resources/log")) {
+            ITimerListener fileLogCountdown = new FileLogCountdown(fileLogger, this.timer);
 
-        logCountdown.register();
-        fileListener.register();
+            logCountdown.register();
+            fileLogCountdown.register();
 
-        this.timer.set(seconds);
-        this.timer.start();
+            this.timer.set(seconds);
+            this.timer.start();
 
-        this.timer.getCompletionFuture().thenRun(() -> {
+            // Warten auf das Ende des Timers
+            this.timer.getCompletionFuture().join();
+
+        } catch (Exception e) {
+            System.err.println("Fehler beim Ausführen des Countdowns: " + e.getMessage());
+        } finally {
             logCountdown.remove();
-            fileListener.remove();
-        });
+        }
     }
 }

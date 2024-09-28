@@ -4,18 +4,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class FileLogger implements ILogger {
-
+public class FileLogger implements ILogger, AutoCloseable {
     private final String filePath;
-    private PrintWriter writer;
+    private final PrintWriter writer;
 
-    public FileLogger(String filePath) {
+    public FileLogger(String filePath) throws IOException {
         this.filePath = filePath + ".txt";
+        this.writer = new PrintWriter(new FileWriter(this.filePath, true));
+    }
 
-        try {
-            this.writer = new PrintWriter(new FileWriter(this.filePath, false));
-        } catch (IOException e) {
-            throw new RuntimeException("Fehler beim Öffnen der Log-Datei: " + e.getMessage(), e);
+    @Override
+    public void close() {
+        if (writer != null) {
+            writer.close();
         }
     }
 
@@ -36,5 +37,4 @@ public class FileLogger implements ILogger {
         writer.println("ERROR: " + message);
         writer.flush();
     }
-
 }
