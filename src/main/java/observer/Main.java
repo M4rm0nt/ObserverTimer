@@ -2,20 +2,22 @@ package observer;
 
 import observer.basisklassen.Console;
 import observer.basisklassen.ConsoleLogger;
+import observer.basisklassen.FileLogger;
 import observer.basisklassen.ILogger;
 import observer.publisher.ITimer;
 import observer.publisher.Timer;
+import observer.subscriber.FileLogCountdown;
 import observer.subscriber.ITimerListener;
 import observer.subscriber.LogCountdown;
 
 // Steuerungsklasse
-public class Main implements ICountdown {
+public class Main {
 
     private ITimer timer;
 
     public static void main(String[] args) {
         Main main = new Main();
-        main.setupAndStartCountdown(10);
+        main.setupAndStartCountdown(2);
     }
 
     public void setupAndStartCountdown(int seconds) {
@@ -23,23 +25,21 @@ public class Main implements ICountdown {
         this.timer = new Timer();
 
         ILogger logger = new ConsoleLogger(new Console());
-        ITimerListener iTimerListener = new LogCountdown(logger, this.timer);
+        ITimerListener logCountdown = new LogCountdown(logger, this.timer);
 
-        start(seconds, iTimerListener,this.timer);
+        ILogger fileLogger = new FileLogger("src/main/resources/log");
+        ITimerListener fileListener = new FileLogCountdown(fileLogger, this.timer);
+
+        logCountdown.register();
+        fileListener.register();
+        this.timer.set(seconds);
+        this.timer.start();
 
         this.timer.getCompletionFuture().thenRun(() -> {
-            iTimerListener.remove();
+            logCountdown.remove();
+            fileListener.remove();
         });
 
     }
 
-    @Override
-    public void start(int seconds, ITimerListener iTimerListener, ITimer timer) {
-        if (seconds <= 0) {
-            throw new IllegalArgumentException("Die Anzahl der Sekunden muss größer als 0 sein.");
-        }
-        iTimerListener.register();
-        this.timer.set(seconds);
-        this.timer.start();
-    }
 }
