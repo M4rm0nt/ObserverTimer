@@ -1,4 +1,4 @@
-INFO: Countdown von 2 Sekunden gestartet um 18:18:20.
+INFO: Countdown von 2 Sekunden gestartet um 18:25:51.
 INFO: 2
 INFO: 1
-INFO: Countdown gestoppt um 18:18:22.
+INFO: Countdown gestoppt um 18:25:53.

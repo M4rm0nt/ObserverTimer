@@ -50,8 +50,6 @@ public class Timer implements ITimer {
             }
             notifyTimerStart();
             this.scheduler.scheduleAtFixedRate(this::timerTick, 0, 1, TimeUnit.SECONDS);
-        } else {
-            notifyTimerAlreadyRunning();
         }
     }
 
@@ -65,10 +63,6 @@ public class Timer implements ITimer {
 
         notifyTimerGet();
         this.seconds.decrementAndGet();
-    }
-
-    private void notifyTimerAlreadyRunning() {
-        notifyListeners(ITimerListener::onTimerAlreadyRunning);
     }
 
     @Override

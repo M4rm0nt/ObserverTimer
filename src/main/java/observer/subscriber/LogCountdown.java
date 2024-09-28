@@ -28,11 +28,6 @@ public class LogCountdown implements ITimerListener {
     }
 
     @Override
-    public void onTimerAlreadyRunning() {
-        this.logger.error("Der Countdown läuft bereits.");
-    }
-
-    @Override
     public void onTimerGet(int sekunden) {
         this.logger.info(String.valueOf(sekunden));
     }
