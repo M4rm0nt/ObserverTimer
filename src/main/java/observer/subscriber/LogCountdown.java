@@ -21,6 +21,10 @@ public class LogCountdown implements ITimerListener {
         this.timer.addListener(this);
     }
 
+    public void remove() {
+        this.timer.removeListener(this);
+    }
+
     @Override
     public void onTimerStart(int sekunden) {
         String zeit = LocalTime.now().format(this.formatter);
@@ -38,7 +42,4 @@ public class LogCountdown implements ITimerListener {
         this.logger.info("Countdown gestoppt um %s.", zeit);
     }
 
-    public void remove() {
-        this.timer.removeListener(this);
-    }
 }
