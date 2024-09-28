@@ -10,7 +10,7 @@ public class FileLogger implements ILogger, AutoCloseable {
 
     public FileLogger(String filePath) throws IOException {
         this.filePath = filePath + ".txt";
-        this.writer = new PrintWriter(new FileWriter(this.filePath, true));
+        this.writer = new PrintWriter(new FileWriter(this.filePath, false));
     }
 
     @Override
