@@ -27,7 +27,7 @@ public class Timer implements ITimer {
 
     @Override
     public void removeListener(ITimerListener listener) {
-        listeners.remove(listener);
+        this.listeners.remove(listener);
     }
 
     @Override
@@ -40,12 +40,12 @@ public class Timer implements ITimer {
 
     @Override
     public void start() {
-        if (isRunning.compareAndSet(false, true)) {
-            if (scheduler == null || scheduler.isShutdown()) {
-                scheduler = Executors.newSingleThreadScheduledExecutor();
+        if (this.isRunning.compareAndSet(false, true)) {
+            if (this.scheduler == null || this.scheduler.isShutdown()) {
+                this.scheduler = Executors.newSingleThreadScheduledExecutor();
             }
             notifyTimerStart();
-            scheduler.scheduleAtFixedRate(this::timerTick, 0, 1, TimeUnit.SECONDS);
+            this.scheduler.scheduleAtFixedRate(this::timerTick, 0, 1, TimeUnit.SECONDS);
         } else {
             notifyTimerAlreadyRunning();
         }
@@ -73,7 +73,7 @@ public class Timer implements ITimer {
 
         notifyTimerStop();
         shutdownScheduler();
-        completionFuture.complete(null);
+        this.completionFuture.complete(null);
     }
 
     private void shutdownScheduler() {
