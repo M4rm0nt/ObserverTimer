@@ -104,11 +104,7 @@ public class Timer implements ITimer {
 
     private void notifyListeners(Consumer<ITimerListener> action) {
         for (ITimerListener listener : this.listeners) {
-            try {
                 action.accept(listener);
-            } catch (Exception e) {
-                System.err.format("Fehler beim Benachrichtigen des Listeners %s: %s%n", listener, e.getMessage());
-            }
         }
     }
 
