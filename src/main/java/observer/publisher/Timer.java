@@ -2,6 +2,7 @@ package observer.publisher;
 
 import observer.subscriber.ITimerListener;
 
+import java.util.Objects;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -20,26 +21,21 @@ public class Timer implements ITimer {
     private final AtomicInteger seconds = new AtomicInteger();
 
     @Override
-    public CompletableFuture<Void> getCompletionFuture() {
-        return this.completionFuture;
-    }
-
-    @Override
     public void addListener(ITimerListener listener) {
         this.listeners.add(listener);
     }
 
     @Override
     public void removeListener(ITimerListener listener) {
+        this.listeners.removeIf(Objects::isNull);
         this.listeners.remove(listener);
     }
 
     @Override
     public void set(int seconds) {
-        if (seconds <= 0) {
-            throw new IllegalArgumentException("Die Anzahl der Sekunden muss größer als 0 sein.");
+        if (seconds > 0) {
+            this.seconds.set(seconds);
         }
-        this.seconds.set(seconds);
     }
 
     @Override
@@ -51,6 +47,11 @@ public class Timer implements ITimer {
             notifyTimerStart();
             this.scheduler.scheduleAtFixedRate(this::timerTick, 0, 1, TimeUnit.SECONDS);
         }
+    }
+
+    @Override
+    public CompletableFuture<Void> getCompletionFuture() {
+        return this.completionFuture;
     }
 
     private void timerTick() {
@@ -67,12 +68,13 @@ public class Timer implements ITimer {
 
     @Override
     public void stop() {
-        if (!this.isRunning.compareAndSet(true, false)) return;
-
-        notifyTimerStop();
-        shutdownScheduler();
-        this.completionFuture.complete(null);
+        if (this.isRunning.compareAndSet(true, false)) {
+            notifyTimerStop();
+            shutdownScheduler();
+            this.completionFuture.complete(null);
+        }
     }
+
 
     private void shutdownScheduler() {
         if (this.scheduler != null && !this.scheduler.isShutdown()) {

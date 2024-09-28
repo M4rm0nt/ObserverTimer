@@ -17,10 +17,16 @@ public class Main {
 
     public static void main(String[] args) {
         Main main = new Main();
-        main.setupAndStartCountdown(2);
+        main.setupAndStartCountdown(4);
     }
 
     public void setupAndStartCountdown(int seconds) {
+
+        if (seconds <= 0) {
+            System.out.println("Bitte geben Sie eine Zahl größer als 0 ein.");
+            return;
+        }
+
         this.timer = new Timer();
 
         ILogger consoleLogger = new ConsoleLogger(new Console());
