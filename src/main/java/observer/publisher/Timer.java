@@ -9,6 +9,10 @@ import java.util.function.Consumer;
 
 public class Timer implements ITimer {
 
+    public Timer() {
+        Runtime.getRuntime().addShutdownHook(new Thread(this::shutdownScheduler));
+    }
+
     private final CompletableFuture<Void> completionFuture = new CompletableFuture<>();
     private final CopyOnWriteArrayList<ITimerListener> listeners = new CopyOnWriteArrayList<>();
     private ScheduledExecutorService scheduler;

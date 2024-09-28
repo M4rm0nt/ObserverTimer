@@ -32,6 +32,7 @@ public class Main {
 
         logCountdown.register();
         fileListener.register();
+
         this.timer.set(seconds);
         this.timer.start();
 
@@ -39,7 +40,5 @@ public class Main {
             logCountdown.remove();
             fileListener.remove();
         });
-
     }
-
 }
