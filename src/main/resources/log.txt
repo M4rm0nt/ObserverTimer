@@ -2,3 +2,23 @@ INFO: Countdown von 2 Sekunden gestartet um 18:31:41.
 INFO: 2
 INFO: 1
 INFO: Countdown gestoppt um 18:31:43.
+INFO: Countdown von 5 Sekunden gestartet um 18:41:40.
+INFO: 5
+INFO: 4
+INFO: 3
+INFO: 2
+INFO: 1
+INFO: Countdown gestoppt um 18:41:45.
+INFO: Countdown von 2 Sekunden gestartet um 18:44:06.
+INFO: Countdown von 2 Sekunden gestartet um 18:44:46.
+INFO: 2
+INFO: 1
+INFO: Countdown gestoppt um 18:44:48.
+INFO: Countdown von 2 Sekunden gestartet um 18:47:27.
+INFO: 2
+INFO: 1
+INFO: Countdown gestoppt um 18:47:29.
+INFO: Countdown von 2 Sekunden gestartet um 18:49:01.
+INFO: 2
+INFO: 1
+INFO: Countdown gestoppt um 18:49:03.

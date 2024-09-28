@@ -16,7 +16,7 @@ public class Main {
 
     public static void main(String[] args) {
         Main main = new Main();
-        main.setupAndStartCountdown(5); // 5 Sekunden als Beispiel
+        main.setupAndStartCountdown(2);
     }
 
     public void setupAndStartCountdown(int seconds) {
@@ -34,13 +34,13 @@ public class Main {
             this.timer.set(seconds);
             this.timer.start();
 
-            // Warten auf das Ende des Timers
             this.timer.getCompletionFuture().join();
+
+            logCountdown.remove();
+            fileLogCountdown.remove();
 
         } catch (Exception e) {
             System.err.println("Fehler beim Ausführen des Countdowns: " + e.getMessage());
-        } finally {
-            logCountdown.remove();
         }
     }
 }
