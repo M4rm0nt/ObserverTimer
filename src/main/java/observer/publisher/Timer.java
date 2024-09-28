@@ -108,4 +108,7 @@ public class Timer implements ITimer {
         }
     }
 
+    public CopyOnWriteArrayList<ITimerListener> getListeners() {
+        return listeners;
+    }
 }

@@ -8,7 +8,7 @@ import observer.publisher.ITimer;
 import observer.publisher.Timer;
 import observer.subscriber.FileLogCountdown;
 import observer.subscriber.ITimerListener;
-import observer.subscriber.LogCountdown;
+import observer.subscriber.ConsoleLogCountdown;
 
 // Steuerungsklasse
 public class Main {
@@ -23,7 +23,7 @@ public class Main {
         this.timer = new Timer();
 
         ILogger consoleLogger = new ConsoleLogger(new Console());
-        ITimerListener logCountdown = new LogCountdown(consoleLogger);
+        ITimerListener logCountdown = new ConsoleLogCountdown(consoleLogger);
         logCountdown.setPublisher(this.timer);
 
         try (FileLogger fileLogger = new FileLogger("src/main/resources/log")) {
@@ -33,6 +33,9 @@ public class Main {
             logCountdown.register();
             fileLogCountdown.register();
 
+            Timer timer = (Timer) this.timer;
+            System.out.println(timer.getListeners().size() + " Listener registriert.");
+
             this.timer.set(seconds);
             this.timer.start();
 
@@ -40,6 +43,8 @@ public class Main {
 
             logCountdown.remove();
             fileLogCountdown.remove();
+
+            System.out.println(timer.getListeners().size() + " Listener registriert.");
 
         } catch (Exception e) {
             System.err.println("Fehler beim Ausführen des Countdowns: " + e.getMessage());
