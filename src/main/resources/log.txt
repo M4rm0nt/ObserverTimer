@@ -26,3 +26,7 @@ INFO: Countdown von 2 Sekunden gestartet um 18:56:45.
 INFO: 2
 INFO: 1
 INFO: Countdown gestoppt um 18:56:47.
+INFO: Countdown von 2 Sekunden gestartet um 19:08:37.
+INFO: 2
+INFO: 1
+INFO: Countdown gestoppt um 19:08:39.
