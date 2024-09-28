@@ -13,9 +13,16 @@ public class ConsoleLogger implements ILogger {
         String message = String.format(format, args);
         info(message);
     }
+
     @Override
     public void info(String message) {
         console.print("INFO: " + message);
+    }
+
+    @Override
+    public void error(String format, Object... args) {
+        String message = String.format(format, args);
+        error(message);
     }
 
     @Override

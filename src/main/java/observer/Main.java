@@ -12,6 +12,7 @@ import observer.subscriber.ConsoleLogCountdown;
 
 // Steuerungsklasse
 public class Main {
+
     private ITimer timer;
 
     public static void main(String[] args) {
@@ -47,7 +48,7 @@ public class Main {
             consoleLogger.debug("%d " + "Listener registriert.", timer.getListeners().size());
 
         } catch (Exception e) {
-            System.err.println("Fehler beim Ausführen des Countdowns: " + e.getMessage());
+            consoleLogger.error("Fehler beim Ausführen des Countdowns: %s", e.getMessage());
         }
     }
 }
